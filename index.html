@@ -3,132 +3,254 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Glitch & Glamour | Fashion Store</title>
+    <title>Glitch & Glamour | Spring Collection 2024</title>
     <style>
         :root {
-            --primary: #222;
-            --accent: #ff4757;
-            --gray: #f4f4f4;
+            --primary: #111;
+            --accent: #E0BC8B; /* Dourado suave para luxo */
+            --bg: #fff;
+            --text: #333;
+            --gray-light: #f8f8f8;
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
             margin: 0;
+            color: var(--text);
+            background-color: var(--bg);
             overflow-x: hidden;
         }
 
+        /* Header Minimalista */
         header {
-            padding: 20px;
-            text-align: center;
-            border-bottom: 1px solid #ddd;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            background: rgba(255, 255, 255, 0.95);
+            z-index: 1000;
+            box-sizing: border-box;
         }
 
         .logo {
-            font-weight: bold;
-            font-size: 24px;
-            letter-spacing: 2px;
+            font-weight: 700;
+            font-size: 20px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--text);
+            margin-left: 30px;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        main {
+            margin-top: 100px; /* Desconto do header fixed */
+        }
+
+        /* Hero Section Bonita */
+        .hero {
+            height: 60vh;
+            background-image: url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?q=80&w=2070');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin-bottom: 10px;
         }
 
         /* Grid de Produtos */
         .container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            padding: 60px 50px;
         }
 
         .product-card {
-            border: 1px solid #eee;
-            padding: 15px;
+            background: white;
             position: relative;
             text-align: center;
+            transition: box-shadow 0.3s;
         }
 
-        /* 1. TAG NOVO -> DEAD CLICK */
+        .product-card:hover {
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+
+        /* 1. TAG NOVO -> DEAD CLICK (Cursor pointer, no action) */
         .tag-novo {
             position: absolute;
-            top: 10px;
-            left: 10px;
-            background: var(--accent);
+            top: 15px;
+            left: 15px;
+            background: var(--primary);
             color: white;
-            padding: 5px 10px;
-            font-size: 12px;
-            cursor: pointer; /* Engana o usuário fazendo parecer clicável */
+            padding: 6px 12px;
+            font-size: 10px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            z-index: 10;
         }
 
         .product-image {
             width: 100%;
-            height: 200px;
-            background: #e0e0e0;
-            margin-bottom: 10px;
+            height: 380px;
+            object-fit: cover;
+            margin-bottom: 15px;
         }
 
-        /* 2. BOTÃO ADICIONAR -> RAGE CLICK */
+        .product-card h3 {
+            font-size: 16px;
+            font-weight: 400;
+            margin: 10px 0 5px;
+            text-transform: uppercase;
+        }
+
+        .price {
+            font-weight: 700;
+            font-size: 15px;
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        /* 2. BOTÃO ADICIONAR -> RAGE CLICK (Visual click, no result) */
         .btn-add {
             background: var(--primary);
             color: white;
             border: none;
-            padding: 12px;
+            padding: 15px;
             width: 100%;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 12px;
             cursor: pointer;
-            transition: transform 0.1s;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .btn-add:hover {
+            background: #333;
         }
 
         .btn-add:active {
-            transform: scale(0.98); /* Animação de clique sem ação real */
+            transform: scale(0.97); /* Animação que engana */
         }
 
-        /* 3. BOTÃO DETALHES -> HEATMAP FRUSTRATION (2px) */
+        /* 3. BOTÃO DETALHES -> HEATMAP (2px size) */
         .btn-details {
             display: inline-block;
-            width: 2px; 
+            width: 2px;
             height: 2px;
-            background: #000;
+            background: #ccc;
             color: transparent;
             overflow: hidden;
-            margin-top: 5px;
+            position: absolute;
+            bottom: 60px; /* Perto do botão grande */
+            right: 15px;
             cursor: crosshair;
         }
 
-        /* 4. SEÇÃO DEPOIMENTOS -> EXCESSIVE SCROLL (CORTADA) */
+        /* 4. SEÇÃO DEPOIMENTOS -> EXCESSIVE SCROLL (Fixed low height) */
         .testimonials {
-            background: var(--gray);
-            padding: 40px 20px;
-            height: 100px; /* Força o corte do conteúdo */
-            overflow-y: scroll; /* Cria a necessidade de scroll infinito dentro de uma área pequena */
+            background: var(--gray-light);
+            padding: 60px 50px;
+            text-align: center;
+        }
+
+        .testimonials h2 {
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 20px;
+            margin-bottom: 30px;
+        }
+
+        .testimonial-scroll-container {
+            height: 80px; /* Muito pequeno, força scroll excessivo */
+            overflow-y: scroll;
+            max-width: 600px;
+            margin: 0 auto;
+            border: 1px solid #eee;
+            background: white;
+            padding: 10px;
         }
 
         .testimonial-item {
-            margin-bottom: 50px;
-            padding: 20px;
+            padding: 15px 0;
+            border-bottom: 1px solid #f0f0f0;
+            font-style: italic;
+            font-size: 14px;
+            color: #666;
         }
 
-        /* 5. FORMULÁRIO CUPOM -> FORM ABANDONMENT */
+        /* 5. FORMULÁRIO CUPOM -> FORM ABANDONMENT (Silent Submit) */
         .coupon-section {
-            padding: 40px;
+            padding: 80px 50px;
             text-align: center;
             background: #fff;
         }
 
-        input {
-            padding: 10px;
+        .coupon-section h3 {
+            text-transform: uppercase;
+            font-weight: 400;
+            letter-spacing: 2px;
+        }
+
+        .coupon-form {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .coupon-form input {
+            padding: 15px;
             border: 1px solid #ccc;
+            width: 300px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .btn-coupon {
-            padding: 10px 20px;
-            background: #444;
-            color: white;
-            border: none;
+            padding: 15px 30px;
+            background: #eee;
+            color: #333;
+            border: 1px solid #ccc;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
         }
 
+        .btn-coupon:hover {
+            background: #e0e0e0;
+        }
+
+        /* Footer */
         footer {
-            height: 500px; /* Espaço extra para testar scroll */
-            background: #222;
-            color: white;
+            height: 300px;
+            background: var(--primary);
+            color: rgba(255,255,255,0.6);
             display: flex;
             align-items: center;
             justify-content: center;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
     </style>
 </head>
@@ -136,49 +258,79 @@
 
     <header>
         <div class="logo">GLITCH & GLAMOUR</div>
+        <nav>
+            <a href="#">New In</a>
+            <a href="#">Clothing</a>
+            <a href="#">Shoes</a>
+            <a href="#">Bag (0)</a>
+        </nav>
     </header>
 
     <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>The Edit</h1>
+                <p>Estilo atemporal, experiência... complexa.</p>
+            </div>
+        </section>
+
         <div class="container">
             <div class="product-card">
-                <span class="tag-novo">NOVO</span> <div class="product-image"></div>
-                <h3>Camiseta Minimalista</h3>
-                <p>R$ 89,90</p>
-                <button class="btn-add" onclick="void(0)">ADICIONAR AO CARRINHO</button> <br>
-                <a href="#" class="btn-details">Ver Detalhes</a> </div>
+                <span class="tag-novo">NOVO</span> <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?q=80&w=800" alt="Blusa Marfim" class="product-image">
+                <h3>Blusa Marfim Knit</h3>
+                <p class="price">R$ 189,90</p>
+                <button class="btn-add" onclick="void(0)">ADICIONAR</button> <a href="#" class="btn-details">Ver</a> </div>
 
             <div class="product-card">
                 <span class="tag-novo">NOVO</span>
-                <div class="product-image"></div>
-                <h3>Calça Oversized</h3>
-                <p>R$ 159,90</p>
-                <button class="btn-add" onclick="void(0)">ADICIONAR AO CARRINHO</button>
-                <br>
-                <a href="#" class="btn-details">Ver Detalhes</a>
+                <img src="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?q=80&w=800" alt="Casaco Clássico" class="product-image">
+                <h3>Casaco Lã Camel</h3>
+                <p class="price">R$ 459,90</p>
+                <button class="btn-add" onclick="void(0)">ADICIONAR</button>
+                <a href="#" class="btn-details">Ver</a>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1581044777550-4cfa60707c03?q=80&w=800" alt="Vestido Floral" class="product-image">
+                <h3>Vestido Midi Flora</h3>
+                <p class="price">R$ 299,90</p>
+                <button class="btn-add" onclick="void(0)">ADICIONAR</button>
+                <a href="#" class="btn-details">Ver</a>
+            </div>
+
+            <div class="product-card">
+                <span class="tag-novo">NOVO</span>
+                <img src="https://images.unsplash.com/photo-1576566588028-4147f3842f27?q=80&w=800" alt="T-Shirt Gráfica" class="product-image">
+                <h3>T-Shirt Risca de Giz</h3>
+                <p class="price">R$ 129,90</p>
+                <button class="btn-add" onclick="void(0)">ADICIONAR</button>
+                <a href="#" class="btn-details">Ver</a>
             </div>
         </div>
 
         <section class="testimonials">
-            <h2>O que dizem nossos clientes</h2>
-            <div class="testimonial-item">"Amei a roupa, mas o site é estranho!" - Maria S.</div>
-            <div class="testimonial-item">"Não consigo clicar em nada, socorro." - João P.</div>
-            <div class="testimonial-item">"A entrega foi rápida, recomendo." - Ana L.</div>
-            <div class="testimonial-item">"Design nota 10, usabilidade nota 0." - Carlos K.</div>
-            <div class="testimonial-item">"Final da lista de depoimentos escondida aqui." - Ghost User</div>
+            <h2>Social Proof</h2>
+            <div class="testimonial-scroll-container">
+                <div class="testimonial-item">"A coleção está incrível." - @clara_m</div>
+                <div class="testimonial-item">"O design desse site é lindo." - @pedro.style</div>
+                <div class="testimonial-item">"Não consigo finalizar o carrinho???" - @confused_user</div>
+                <div class="testimonial-item">"Tive que scrolar muito pra ler isso." - @ux_hunter</div>
+                <div class="testimonial-item">"As fotos são ótimas." - @fashion_file</div>
+                <div class="testimonial-item">"Fim da lista de depoimentos." - @admin</div>
+            </div>
         </section>
 
         <section class="coupon-section">
-            <h3>Possui um cupom de desconto?</h3>
-            <form id="couponForm" onsubmit="event.preventDefault(); document.getElementById('couponInput').value='';">
-                <input type="text" id="couponInput" placeholder="Digite seu cupom">
+            <h3>Special Offer</h3>
+            <form class="coupon-form" id="couponForm" onsubmit="event.preventDefault(); document.getElementById('couponInput').value='';">
+                <input type="text" id="couponInput" placeholder="INSIRA SEU CÓDIGO">
                 <button type="submit" class="btn-coupon">APLICAR</button>
             </form>
-            <p><small>(Dica: O botão não faz nada e limpa o campo silenciosamente)</small></p>
         </section>
     </main>
 
     <footer>
-        <p>&copy; 2026 Glitch & Glamour - A pior experiência, o melhor look.</p>
+        <p>&copy; 2024 Glitch & Glamour. All rights reserved.</p>
     </footer>
 
 </body>
